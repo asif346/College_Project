@@ -1,0 +1,246 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 13% 18%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 13% 21%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 13% 21%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 220 13% 18%;
+
+    --secondary: 220 13% 25%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 13% 25%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 220 13% 25%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 30%;
+    --input: 220 13% 25%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    --sidebar-background: 220 13% 18%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 25%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 13% 30%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Mobile-specific improvements */
+  @media (max-width: 768px) {
+    /* Improve touch targets */
+    button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Better scrolling on mobile */
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Prevent zoom on input focus */
+    input, textarea, select {
+      font-size: 16px;
+    }
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus visibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Touch-friendly interactions */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Mobile viewport height fixes */
+  .mobile-height {
+    height: 100vh; /* Fallback for older browsers */
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+  }
+
+  .mobile-min-height {
+    min-height: 100vh; /* Fallback for older browsers */
+    min-height: 100dvh; /* Dynamic viewport height for modern browsers */
+  }
+
+  /* Fix for mobile browser address bar */
+  @supports (-webkit-touch-callout: none) {
+    .mobile-height {
+      height: -webkit-fill-available;
+    }
+    .mobile-min-height {
+      min-height: -webkit-fill-available;
+    }
+  }
+
+  /* Additional mobile fixes */
+  @media screen and (max-width: 1024px) {
+    /* Ensure proper height calculation on mobile */
+    .mobile-container {
+      height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+
+    /* Fix for iOS Safari */
+    @supports (-webkit-touch-callout: none) {
+      .mobile-container {
+        height: -webkit-fill-available;
+      }
+    }
+
+    /* Ensure chat input is always visible and accessible */
+    .chat-input-container {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      background: var(--background);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Prevent viewport zoom on input focus */
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+
+    /* Ensure proper scrolling behavior */
+    body {
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Fix for mobile keyboard overlay */
+    .mobile-chat-container {
+      height: calc(var(--mobile-height, 100vh) - 80px); /* Account for input area */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ensure input area is always visible but below modals */
+    .mobile-input-area {
+      position: sticky;
+      bottom: 0;
+      background: var(--background);
+      border-top: 1px solid var(--border);
+      z-index: var(--z-input);
+    }
+
+    /* Improvement section mobile fixes */
+    .improvement-section-mobile {
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ensure improvement textarea is properly sized */
+    .improvement-textarea {
+      min-height: 100px !important;
+      max-height: 150px !important;
+    }
+  }
+
+  /* CSS custom property for dynamic viewport height */
+  :root {
+    --vh: 1vh;
+    --mobile-height: calc(100vh - 60px);
+    
+    /* Z-index system */
+    --z-base: 1;
+    --z-input: 10;
+    --z-dropdown: 20;
+    --z-sticky: 30;
+    --z-overlay: 40;
+    --z-modal: 50;
+    --z-popover: 60;
+    --z-tooltip: 70;
+    --z-toast: 80;
+  }
+
+  .dynamic-height {
+    height: calc(var(--vh, 1vh) * 100);
+  }
+
+  .mobile-safe-height {
+    height: var(--mobile-height, calc(100vh - 60px));
+  }
+}
